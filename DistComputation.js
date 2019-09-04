@@ -80,7 +80,7 @@ function addToGeo(address){
 
 // Create the parameters for the geocoding request:
     var geocodingParams = {
-        searchText: '200 S Mathilda Ave, Sunnyvale, CA'
+        searchText: address
     };
 
 // Define a callback function to process the geocoding response:
