@@ -45,7 +45,8 @@ function retrieve_all_info() {
                 user_name: childData.FirstName + " " + childData.LastName,
                 address: user_address,
                 gender: childData.Gender,
-                phoneNum: childData.PhoneNumber
+                phoneNum: childData.PhoneNumber,
+                distance: 0
             };
             all_users.push(user_dict);
         });
