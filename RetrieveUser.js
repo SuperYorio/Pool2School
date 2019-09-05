@@ -19,7 +19,7 @@ function retrieve_all_info() {
     var ref = firebase.database().ref("Student");
     var all_users = [];
 
-    // This method returns the information of a user
+    // This method returns the information of all users
     ref.on("value", function (snapshot) {
         var currentEmail = firebase.auth().currentUser.email;
         console.log("Email:  " + currentEmail);
