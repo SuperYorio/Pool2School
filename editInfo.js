@@ -29,9 +29,9 @@ ref.on("value", function (snapshot) {
         childData = childSnapshot.val();
         email = childData.Email;
         password = childData.Password;
-        userKey = childSnapshot.key;
         userName = childData.FirstName;
         if(email == currentEmail) {
+            userKey = childSnapshot.key;
             document.getElementById("editFirstName").value = childData.FirstName;
             document.getElementById("editLastName").value = childData.LastName;
             document.getElementById("editPhoneNum").value = childData.PhoneNumber;
@@ -64,11 +64,12 @@ function submitForm(e) {
     var state = getInputVal('editInputState');
     var zip = getInputVal('editInputZip');
 
-    data = {City: city, Email: email, FirstAddress: firstAddress, FirstName: firstName, Gender:gender,
+    data = {City: city, Email: email, FirstAddress: firstAddress, FirstName: firstName, Gender: gender,
         LastName: lastName, Password: password, PhoneNumber: phoneNum, SecondAddress: secondAddress,
         State: state, Zip: zip}
 
     const fb = firebase.database().ref();
+    console.log(userKey);
     fb.child("Student/" + userKey).update(data).then(function(){
         window.alert("Profile Updated!");
         window.location.href = "SearchPage.html";
