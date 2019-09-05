@@ -18,7 +18,7 @@ console.log("Calling All Users: ");
 console.log(users_array);
 
 // The method that returns all users in an array of objects
-// array[0] is the original user
+// array[0] is the original user 
 function retrieve_all_info() {
     var ref = firebase.database().ref("Student");
     var all_users = [];
