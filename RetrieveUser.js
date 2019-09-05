@@ -13,15 +13,15 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-// window.retrieve_all_info();
 var users_array = retrieve_all_info();
 console.log("Calling All Users: ");
 console.log(users_array);
 
+// The method that returns all users in an array of objects
+// array[0] is the original user
 function retrieve_all_info() {
     var ref = firebase.database().ref("Student");
     var all_users = [];
-
     // This method returns the information of a user
     ref.on("value", function (snapshot) {
         var currentEmail = firebase.auth().currentUser.email;
@@ -31,6 +31,18 @@ function retrieve_all_info() {
             var email = childData.Email;
             var user_address;
             if(email.toString() == currentEmail.toString()) {
+                var orig_dict = {
+                    userKey: childSnapshot.key,
+                    email: email,
+                    password: childData.Password,
+                    user_name: childData.FirstName + " " + childData.LastName,
+                    address: user_address,
+                    gender: childData.Gender,
+                    phoneNum: childData.PhoneNumber,
+                    distance: 0
+                };
+                all_users.unshift(orig_dict);
+                included_self = true;
                 return;
             }
             if(childData.SecondAddress.toString() == "") {
@@ -54,7 +66,5 @@ function retrieve_all_info() {
             all_users.push(user_dict);
         });
     });
-    // console.log("Calling All Users:");
-    // console.log(all_users);
     return all_users;
 }
