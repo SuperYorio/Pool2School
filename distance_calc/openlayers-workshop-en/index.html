@@ -5,7 +5,7 @@
     <title>LOL</title>
 </head>
 <body>
-<script src="https://maps.googleapis.com/maps/api/js?key=###KEY###"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIVBMxkdahdjOF9FKCebdWZ-vzi1h8hJY"></script>
 <script>
 
     var directionsService = new google.maps.DirectionsService();
@@ -18,7 +18,7 @@
 
     directionsService.route(request, function(response, status) {
         if ( status == google.maps.DirectionsStatus.OK ) {
-            alert( response.routes[0].legs[0].distance.value ); // the distance in metres
+            alert( "success" + response.routes[0].legs[0].distance.value ); // the distance in metres
         }
     });
 </script>
