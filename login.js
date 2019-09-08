@@ -49,7 +49,7 @@ if (logoutBtn) {
     logoutBtn.addEventListener('click', e => {
         firebase.auth().signOut();
         // window.alert('Successfully Logged Out!');
-        window.location = "index.html";
+        window.location = "Index.html";
     });
 }
 
