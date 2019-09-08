@@ -7,20 +7,34 @@
 <body>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIVBMxkdahdjOF9FKCebdWZ-vzi1h8hJY"></script>
 <script>
+    var start = "39324 Argonaut Way, Fremont, CA 94538, USA";
+    var end = "43621 Pacific Commons Blvd, Fremont, CA 94538, USA";
+    console.log(start);
+    console.log(end);
 
-    var directionsService = new google.maps.DirectionsService();
+    function dist(orig, dest){
+        var directionsService = new google.maps.DirectionsService();
+        var ans = 0;
+        var request = {
+            origin      : orig,
+            destination : dest,
+            travelMode  : google.maps.DirectionsTravelMode.DRIVING
+        };
+        console.log("In");
+        directionsService.route(request, function(response, status) {
+            if ( status == google.maps.DirectionsStatus.OK ) {
+                console.log("Distance");
+                alert("Alert Distance: " + response.routes[0].legs[0].distance.value); // works
+                return response.routes[0].legs[0].distance.value; // returns "undefined"
+            }
+            else {
+                console.log("Nothing");
+            }
+        });
+    }
 
-    var request = {
-        origin      : 'Melbourne VIC', // a city, full address, landmark etc
-        destination : 'Sydney NSW',
-        travelMode  : google.maps.DirectionsTravelMode.DRIVING
-    };
-
-    directionsService.route(request, function(response, status) {
-        if ( status == google.maps.DirectionsStatus.OK ) {
-            alert( "success" + response.routes[0].legs[0].distance.value ); // the distance in metres
-        }
-    });
+    var distance = dist(start, end);
+    console.log("Return Distance: " + distance);
 </script>
 </body>
 </html>
