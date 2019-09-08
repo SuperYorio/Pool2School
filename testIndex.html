@@ -14,21 +14,18 @@
 
     function dist(orig, dest){
         var directionsService = new google.maps.DirectionsService();
-        var ans = 0;
         var request = {
             origin      : orig,
             destination : dest,
             travelMode  : google.maps.DirectionsTravelMode.DRIVING
         };
-        console.log("In");
         directionsService.route(request, function(response, status) {
             if ( status == google.maps.DirectionsStatus.OK ) {
-                console.log("Distance");
                 alert("Alert Distance: " + response.routes[0].legs[0].distance.value); // works
                 return response.routes[0].legs[0].distance.value; // returns "undefined"
             }
             else {
-                console.log("Nothing");
+                console.log("Error!");
             }
         });
     }
