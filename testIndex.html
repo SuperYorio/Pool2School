@@ -5,33 +5,74 @@
     <title>LOL</title>
 </head>
 <body>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIVBMxkdahdjOF9FKCebdWZ-vzi1h8hJY"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIVBMxkdahdjOF9FKCebdWZ-vzi1h8hJY&callback=main" async defer></script>
 <script>
-    var start = "39324 Argonaut Way, Fremont, CA 94538, USA";
-    var end = "43621 Pacific Commons Blvd, Fremont, CA 94538, USA";
-    console.log(start);
-    console.log(end);
+
+
 
     function dist(orig, dest){
-        var directionsService = new google.maps.DirectionsService();
-        var request = {
-            origin      : orig,
-            destination : dest,
-            travelMode  : google.maps.DirectionsTravelMode.DRIVING
-        };
-        directionsService.route(request, function(response, status) {
-            if ( status == google.maps.DirectionsStatus.OK ) {
-                alert("Alert Distance: " + response.routes[0].legs[0].distance.value); // works
-                return response.routes[0].legs[0].distance.value; // returns "undefined"
-            }
-            else {
-                console.log("Error!");
-            }
+        return new Promise(function(resolve, reject){
+            var directionsService = new google.maps.DirectionsService();
+            var request = {
+                origin      : orig,
+                destination : dest,
+                travelMode  : google.maps.DirectionsTravelMode.DRIVING
+            };
+            directionsService.route(request,
+                function(response, status) {
+                    if ( status == google.maps.DirectionsStatus.OK ) {
+                        resolve(response.routes[0].legs[0].distance.value); // returns "undefined"
+                    }
+                    else {
+                        reject(status);
+                    }
+                });
         });
+
     }
 
-    var distance = dist(start, end);
-    console.log("Return Distance: " + distance);
+    function main(){
+        var start = "39324 Argonaut Way, Fremont, CA 94538, USA";
+        var end = "43621 Pacific Commons Blvd, Fremont, CA 94538, USA";
+        console.log(start);
+        console.log(end);
+        var p = dist(start, end);
+        p.then(function(result) {
+            console.log("Return Distance: " + result);
+        });
+
+    }
+    // Promise.all([
+    //     getLatitudeLongitudePromise("Newton NSW Australia"),
+    //     getLatitudeLongitudePromise("Five Dock NSW Australia"),
+    //     getLatitudeLongitudePromise("University of Sydney NSW Australia"),
+    //     getLatitudeLongitudePromise("Rose Bay NSW Australia"),
+    //     getLatitudeLongitudePromise("North Bondi NSW Australia"),
+    //     getLatitudeLongitudePromise("Surry Hills NSW Australia")
+    // ]).then(function (results) {
+    //     //once all the requests have been performed, we then initiate the map
+    //     map = new google.maps.Map(document.getElementById('map'), {
+    //         zoom: 12,
+    //         center: new google.maps.LatLng(-33.855699,151.223520)
+    //     });
+    //
+    //     //run through each result and set the click event handler
+    //     results.forEach(function(result){
+    //         var marker = new google.maps.Marker({
+    //             position: new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng()),
+    //             map: map
+    //         });
+    //
+    //         var infowindow = new google.maps.InfoWindow();
+    //         google.maps.event.addListener(marker, 'click', function () {
+    //             infowindow.setContent("<div class='googlemap-windowinfo'><div class='googlemap-title'>" + result[0].formatted_address + "</div>");
+    //             infowindow.open(map, this);
+    //         });
+    //     });
+    // })
+
+
+
 </script>
 </body>
 </html>
