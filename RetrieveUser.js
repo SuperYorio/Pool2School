@@ -13,6 +13,8 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
+// BUG: The users_array returned is an empty array/undefined because the data
+// wasn't loaded yet
 var users_array = retrieve_all_info();
 console.log("Calling All Users: ");
 console.log(users_array);
