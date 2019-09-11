@@ -10,17 +10,17 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Pool2School</title>
     <style>
-        .body {
-            padding-bottom: 70px;
-        }
-
         .main-form {
             width: 500px;
             margin: auto;
         }
+        .required:after { content:" *"; color: red}
+        .jumbotron-final {
+            margin-bottom: 0;
+        }
     </style>
 </head>
-<body class="body">
+<body>
 <div class="container">
     <div class="page-header">
         <br/>
@@ -28,42 +28,44 @@
     </div>
 </div>
 <div class="jumbotron jumbotron-fluid" style="background-color:black"><br/></div>
+<br/>
+<p align="center">Before filling out the form, please read the tips at the bottom of the page.</p>
 <!--TODO: Add required feature and password validation once Zhiwei is done with distance calculation-->
 <!--Tip: Password complexity - One uppercase and one lowercase and 6 more characters-->
 <form action="searchPage.html" class="main-form" id="contactForm">
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <label for="firstName">First Name</label>
+                <label for="firstName" class="required">First Name</label>
                 <!-- at the end of each html code add "required" to make the field required"-->
                 <input type="text" name="firstname" id="firstName" class="form-control">
             </div>
         </div>
         <div class="col">
             <div class="form-group">
-                <label for="lastName">Last Name</label>
+                <label for="lastName" class="required">Last Name</label>
                 <input type="text" name="lastname" id="lastName" class="form-control">
             </div>
         </div>
     </div>
     <div class="form-group">
-        <label for="Email">Email</label>
+        <label for="Email" class="required">Email</label>
         <input type="email" name="Email" id="email" class="form-control">
     </div>
     <div class="form-group">
-        <label for="Password">Password</label>
+        <label for="Password" class="required">Password</label>
         <input type="password" name="Password" id="password" class="form-control">
     </div>
     <div class="form-group">
-        <label for="confirm_password">Confirm Password</label>
+        <label for="confirm_password" class="required">Confirm Password</label>
         <input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirm_password" class="form-control">
     </div>
     <div class="form-group">
-        <label for="PhoneNum">Phone Number</label>
+        <label for="PhoneNum" class="required">Phone Number</label>
         <input type="text" name="PhoneNum" id="phoneNum" class="form-control">
     </div>
     <div class="form-group">
-        <label for="Gender">Gender</label>
+        <label for="Gender" class="required">Gender</label>
         <select name="Gender" id="gender" class="form-control">
             <option value="other">Other</option>
             <option value="male">Male</option>
@@ -71,7 +73,7 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="inputAddress">Address</label>
+        <label for="inputAddress" class="required">Address</label>
         <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
     </div>
     <div class="form-group">
@@ -80,11 +82,11 @@
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="inputCity">City</label>
+            <label for="inputCity" class="required">City</label>
             <input type="text" class="form-control" id="inputCity">
         </div>
         <div class="form-group col-md-4">
-            <label for="inputState">State</label>
+            <label for="inputState" class="required">State</label>
             <select id="inputState" class="form-control">
                 <option value="AL">AL</option>
                 <option value="AK">AK</option>
@@ -140,32 +142,54 @@
             </select>
         </div>
         <div class="form-group col-md-2">
-            <label for="inputZip">Zip</label>
+            <label for="inputZip" class="required">Zip</label>
             <input type="text" class="form-control" id="inputZip">
         </div>
     </div>
     <div class="form-group">
-        <label for="daysToPool">Days you want to carpool:</label>
-        <div class="form-check form-check-inline" id="daysToPool" class="form-control">
-            <input class="form-check-input" type="checkbox" id="monday" value="Monday">
+        <label for="daysToPool" class="required">Days you want to carpool:</label>
+        <div class="form-check form-check-inline" id="daysToPool" class="form-control" name="daysToPool">
+            <input class="form-check-input" type="checkbox" id="monday" value="M">
             <label class="form-check-label" for="Monday" style="margin-right: 10px">Monday</label>
-            <input class="form-check-input" type="checkbox" id="tuesday" value="Tuesday">
+            <input class="form-check-input" type="checkbox" id="tuesday" value="T">
             <label class="form-check-label" for="Tuesday" style="margin-right: 10px">Tuesday</label>
-            <input class="form-check-input" type="checkbox" id="wednesday" value="Wednesday">
+            <input class="form-check-input" type="checkbox" id="wednesday" value="W">
             <label class="form-check-label" for="Wednesday" style="margin-right: 10px">Wednesday</label>
-            <input class="form-check-input" type="checkbox" id="thursday" value="Thursday">
+            <input class="form-check-input" type="checkbox" id="thursday" value="Th">
             <label class="form-check-label" for="Thursday" style="margin-right: 10px">Thursday</label>
-            <input class="form-check-input" type="checkbox" id="friday" value="Friday">
+            <input class="form-check-input" type="checkbox" id="friday" value="F">
             <label class="form-check-label" for="Friday" style="margin-right: 10px">Friday</label>
-            <input class="form-check-input" type="checkbox" id="saturday" value="Saturday">
+            <input class="form-check-input" type="checkbox" id="saturday" value="Sat">
             <label class="form-check-label" for="Saturday" style="margin-right: 10px">Saturday</label>
-            <input class="form-check-input" type="checkbox" id="sunday" value="Sunday">
+            <input class="form-check-input" type="checkbox" id="sunday" value="Sun">
             <label class="form-check-label" for="Sunday" style="margin-right: 10px">Sunday</label>
         </div>
     </div>
     <button type="submit" id="saveButton" class="btn btn-primary">Submit & Search for Carpool!</button>
 </form>
 
+<br/>
+<br/>
+<div class="jumbotron jumbotron-fluid jumbotron-final">
+    <div class="container">
+        <h1 class="display-4">Tips!</h1>
+        <p class="lead">
+            1. Your email, password (duh), and address will not be shown to other users!
+            <br/>
+            2. Please double check whether you entered your email and password correctly,
+            you will not be able to change it in the future.
+            <br/>
+            3. Your phone number will be the tool for others to reach you or
+            vice versa. Think of it as leaving your number when making a
+            reservation at a restaurant.
+            <br/>
+            4. If you feel uncomfortable leaving your own home address, feel
+            free to enter another address that is close to you, for example:
+            nearest gas station/Starbucks/Walmart/etc. or the house right beside
+            you.
+        </p>
+    </div>
+</div>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
