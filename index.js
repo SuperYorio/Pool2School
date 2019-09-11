@@ -35,9 +35,9 @@ function submitForm(e) {
     var city = getInputVal('inputCity');
     var state = getInputVal('inputState');
     var zip = getInputVal('inputZip');
-    // var days = getInputVal('daysToPool');
+    var days = get_days_to_pool();
     saveInformation(firstName, lastName, email, password, phoneNum, gender, firstAddress, secondAddress,
-        city, state, zip);
+        city, state, zip, days);
     const promise = firebase.auth().createUserWithEmailAndPassword(email, password);
     promise.catch(e => console.log(e.message));
 }
@@ -47,7 +47,7 @@ function getInputVal(id) {
 }
 
 function saveInformation(firstName, lastName, email, password, phoneNum, gender, firstAddress, secondAddress,
-                         city, state, zip) {
+                         city, state, zip, days) {
     var childRef = firebaseRef.push();
     childRef.set({
         FirstName: firstName,
@@ -61,8 +61,63 @@ function saveInformation(firstName, lastName, email, password, phoneNum, gender,
         City: city,
         State: state,
         Zip: zip,
-        // DaysToPool: days
+        DaysToPool: days
     });
+}
+
+function get_days_to_pool() {
+    var darray = new Array(7);
+
+    if(document.getElementById("monday").checked) {
+        darray[0] = document.getElementById("monday").value;
+    } else {
+        darray[0] = "";
+    }
+
+    if(document.getElementById("tuesday").checked) {
+        darray[1] = document.getElementById("tuesday").value;
+    } else {
+        darray[1] = "";
+    }
+
+    if(document.getElementById("wednesday").checked) {
+        darray[2] = document.getElementById("wednesday").value;
+    } else {
+        darray[2] = "";
+    }
+
+    if(document.getElementById("thursday").checked) {
+        darray[3] = document.getElementById("thursday").value;
+    } else {
+        darray[3] = "";
+    }
+
+    if(document.getElementById("friday").checked) {
+        darray[4] = document.getElementById("friday").value;
+    } else {
+        darray[4] = "";
+    }
+
+    if(document.getElementById("saturday").checked) {
+        darray[5] = document.getElementById("saturday").value;
+    } else {
+        darray[5] = "";
+    }
+
+    if(document.getElementById("sunday").checked) {
+        darray[6] = document.getElementById("sunday").value;
+    } else {
+        darray[6] = "";
+    }
+
+    var days = "";
+    for(var i = 0; i < 7; i++) {
+        if(darray[i] == "") {
+            continue;
+        }
+        days += " " + darray[i];
+    }
+    return days.substring(1);
 }
 
 
