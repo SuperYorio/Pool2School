@@ -13,6 +13,10 @@
         .jumbotron-final {
             margin-bottom: 0;
         }
+        .table {
+            width: 75%;
+            /*width: auto;*/
+        }
     </style>
 </head>
 <body>
@@ -24,7 +28,20 @@
 </div>
 <div class="jumbotron jumbotron-fluid" style="background-color:#000000"><br/></div>
 <div id="user_div" align="center">
-    <h3>Welcome !</h3>
+    <p style="font-size: 25px">Welcome ! The table below shows other students and their distances to you!</p>
+    <table class="table table-hover table-dark tablesize-example" align="center">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Distance (miles)</th>
+            <th scope="col">Phone #</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Days</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
     <p id="user_para" style="font-style: italic">More tips on the bottom of the page :D</p>
     <button id="logoutBtn" class="btn btn-primary">Sign out!</button>
     <a href="EditPage.html" class="btn btn-primary" id="editBtn">Edit Profile</a>
@@ -45,7 +62,9 @@
             3. If you don't find potential Carpool buddies at this moment, remember to come back and check
             every other week! The next registered student may live right beside you ;)
             <br/>
-            4. Keep Calm and CARPOOL!
+            4. If no users show up, you most likely entered in your address incorrectly.
+            <br/>
+            5. Keep Calm and CARPOOL!
         </p>
     </div>
 </div>
