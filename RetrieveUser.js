@@ -17,17 +17,45 @@ if (!firebase.apps.length) {
 // wasn't loaded yet
 var users_array = [];
 let p = retrieve_all_info();
-p.then(function(result){
-    console.log("fetched");
+p.then(function (result) {
     users_array = result;
-    console.log("Calling All Users: ");
+    // console.log("Calling All Users: ");
     console.log(users_array);
     /**
      * TODO: THE rest of the code has to go here.
      */
-    console.log("sorted users");
-    let sorted = sort_user_by_distance(users_array);
-    console.log(sorted);
+
+
+    // Calculate distance between current user to the rest of the users
+
+    var current_user = users_array[0];
+    let count = 0;
+    users_array.shift();
+    users_array.forEach((user) => {
+        var p = dist(current_user.address, user.address);
+        p.then(function(result) {
+            var distance = result / 1609.344;
+            distance = distance.toFixed(1);
+            user.distance = parseFloat(distance);
+            count ++;
+            if (count === users_array.length){
+                users_array = users_array.sort(function(a, b) {
+                    return a.distance - b.distance;
+                });
+                console.log("User Array:");
+                console.log(users_array);
+            }
+
+        });
+
+    });
+
+    // TODO: Fix bug for sorting
+    // BUG: Supposedly sort the users_array by distance
+    // Not working
+
+
+
 }).catch(function () {
     console.log("no user fetched, check connection or database");
 });
@@ -45,7 +73,7 @@ function sort_user_by_distance(users_array){
 // And user-M logged in, so the ideal output array would be
 // [M, A, B, C, D, ... (skips M), X, Y, Z]
 function retrieve_all_info() {
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
         var ref = firebase.database().ref("Student");
         // The array we want full of users, or Students, so to speak.
         var all_users = [];
@@ -58,9 +86,18 @@ function retrieve_all_info() {
                 childData = childSnapshot.val();
                 var email = childData.Email;
                 var user_address;
-                if(email.toString() == currentEmail.toString()) {
+                // Basic address formatting
+                if (childData.SecondAddress.toString() == "") {
+                    user_address = childData.FirstAddress + ", " +
+                        childData.City + ", " + childData.State + ", " + childData.Zip;
+                } else {
+                    user_address = childData.FirstAddress + ", " + childData.SecondAddress + ", " +
+                        childData.City + ", " + childData.State + ", " + childData.Zip;
+                }
+                if (email.toString() == currentEmail.toString()) {
                     // The orig_dict is basically just the Student object
                     var orig_dict = {
+                        distance: 0,
                         userKey: childSnapshot.key,
                         email: email,
                         password: childData.Password,
@@ -68,24 +105,16 @@ function retrieve_all_info() {
                         address: user_address,
                         gender: childData.Gender,
                         phoneNum: childData.PhoneNumber,
-                        distance: 0
+                        days_to_pool: childData.DaysToPool
                     };
                     // This pushes the user we are searching with to the head of the array (hence orig)
                     all_users.unshift(orig_dict);
                     included_self = true;
                     return;
                 }
-                // Basic address formatting
-                if(childData.SecondAddress.toString() == "") {
-                    user_address = childData.FirstAddress + ", " +
-                        childData.City + ", " + childData.State + ", " + childData.Zip;
-                }
-                else {
-                    user_address = childData.FirstAddress + ", " + childData.SecondAddress + ", " +
-                        childData.City + ", " + childData.State + ", " + childData.Zip;
-                }
                 // Other users
                 var user_dict = {
+                    distance: 0,
                     userKey: childSnapshot.key,
                     email: email,
                     password: childData.Password,
@@ -93,21 +122,37 @@ function retrieve_all_info() {
                     address: user_address,
                     gender: childData.Gender,
                     phoneNum: childData.PhoneNumber,
-                    distance: 0
+                    days_to_pool: childData.DaysToPool
                 };
                 // This adds all other users into the array (end)
                 all_users.push(user_dict);
 
             });
-            if(all_users.length !== 0){
-                console.log("what");
+            if (all_users.length !== 0) {
                 resolve(all_users);
-            }else{
+            } else {
                 reject();
             }
 
         });
-        // Return the user array
+    });
+}
 
+function dist(orig, dest) {
+    return new Promise(function (resolve, reject) {
+        var directionsService = new google.maps.DirectionsService();
+        var request = {
+            origin: orig,
+            destination: dest,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+        };
+        directionsService.route(request,
+            function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    resolve(response.routes[0].legs[0].distance.value); // returns "undefined"
+                } else {
+                    reject(status);
+                }
+            });
     });
 }
