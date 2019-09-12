@@ -34,7 +34,7 @@ function loginToSearch(e) {
     auth.signInWithEmailAndPassword(email, password)
         .then(function(firebaseUser) {
             // Success
-            window.location = "searchPage.html";
+            window.location = "SearchPage.html";
         })
         .catch(function(error) {
             // Handle Errors here.
