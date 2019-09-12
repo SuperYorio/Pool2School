@@ -38,43 +38,51 @@
             <div class="form-group">
                 <label for="firstName" class="required">First Name</label>
                 <!-- at the end of each html code add "required" to make the field required"-->
-                <input type="text" name="firstname" id="firstName" class="form-control">
+                <input type="text" name="firstname" id="firstName" class="form-control" required>
             </div>
         </div>
         <div class="col">
             <div class="form-group">
                 <label for="lastName" class="required">Last Name</label>
-                <input type="text" name="lastname" id="lastName" class="form-control">
+                <input type="text" name="lastname" id="lastName" class="form-control" required>
             </div>
         </div>
     </div>
     <div class="form-group">
         <label for="Email" class="required">Email</label>
-        <input type="email" name="Email" id="email" class="form-control">
+        <input type="email" name="Email" id="email" class="form-control" placeholder="test@testmail.com" required>
     </div>
     <div class="form-group">
+        <p style="font-size: 12px;">
+            Password Requirements - at least:<br/>
+            1 CAPITAL Case Letter<br/>
+            1 lower Case Letter<br/>
+            1 number<br/>
+            7 Characters in total<br/>
+            Ex: Ab123456
+        <p/>
         <label for="Password" class="required">Password</label>
-        <input type="password" name="Password" id="password" class="form-control">
+        <input type="password" name="Password" id="password" class="form-control" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$" required>
     </div>
     <div class="form-group">
         <label for="confirm_password" class="required">Confirm Password</label>
-        <input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirm_password" class="form-control">
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirm_password" class="form-control" required>
     </div>
     <div class="form-group">
         <label for="PhoneNum" class="required">Phone Number</label>
-        <input type="text" name="PhoneNum" id="phoneNum" class="form-control">
+        <input type="text" name="PhoneNum" id="phoneNum" class="form-control" required>
     </div>
     <div class="form-group">
         <label for="Gender" class="required">Gender</label>
-        <select name="Gender" id="gender" class="form-control">
-            <option value="other">Other</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+        <select name="Gender" id="gender" class="form-control" required>
+            <option value="Other">Other</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
         </select>
     </div>
     <div class="form-group">
         <label for="inputAddress" class="required">Address</label>
-        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
     </div>
     <div class="form-group">
         <label for="inputAddress2">Address 2</label>
@@ -83,11 +91,11 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="inputCity" class="required">City</label>
-            <input type="text" class="form-control" id="inputCity">
+            <input type="text" class="form-control" id="inputCity" required>
         </div>
         <div class="form-group col-md-4">
             <label for="inputState" class="required">State</label>
-            <select id="inputState" class="form-control">
+            <select id="inputState" class="form-control" required>
                 <option value="AL">AL</option>
                 <option value="AK">AK</option>
                 <option value="AR">AR</option>
@@ -143,12 +151,12 @@
         </div>
         <div class="form-group col-md-2">
             <label for="inputZip" class="required">Zip</label>
-            <input type="text" class="form-control" id="inputZip">
+            <input type="text" class="form-control" id="inputZip" required>
         </div>
     </div>
     <div class="form-group">
         <label for="daysToPool" class="required">Days you want to carpool:</label>
-        <div class="form-check form-check-inline" id="daysToPool" class="form-control" name="daysToPool">
+        <div class="form-check form-check-inline" id="daysToPool" class="form-control" name="daysToPool" required>
             <input class="form-check-input" type="checkbox" id="monday" value="M">
             <label class="form-check-label" for="Monday" style="margin-right: 10px">Monday</label>
             <input class="form-check-input" type="checkbox" id="tuesday" value="T">
