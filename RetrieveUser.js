@@ -25,9 +25,18 @@ p.then(function(result){
     /**
      * TODO: THE rest of the code has to go here.
      */
+    console.log("sorted users");
+    let sorted = sort_user_by_distance(users_array);
+    console.log(sorted);
 }).catch(function () {
     console.log("no user fetched, check connection or database");
 });
+
+function sort_user_by_distance(users_array){
+    return users_array.sort(function(a, b){
+        return a['address'] - b['address'];
+    });
+}
 
 
 // The method that returns all users in an array of objects
