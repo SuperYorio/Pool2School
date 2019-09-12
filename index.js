@@ -37,10 +37,10 @@ function submitForm(e) {
     var state = getInputVal('inputState');
     var zip = getInputVal('inputZip');
     var days = get_days_to_pool();
-    saveInformation(firstName, lastName, email, password, phoneNum, gender, firstAddress, secondAddress,
-        city, state, zip, days);
     const promise = firebase.auth().createUserWithEmailAndPassword(email, password);
     promise.catch(e => window.alert(e.message));
+    saveInformation(firstName, lastName, email, password, phoneNum, gender, firstAddress, secondAddress,
+        city, state, zip, days);
 }
 
 function getInputVal(id) {
