@@ -13,8 +13,6 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
-// BUG: The users_array returned is an empty array/undefined because the data
-// wasn't loaded yet
 var users_array = [];
 let p = retrieve_all_info();
 p.then(function (result) {
@@ -27,7 +25,6 @@ p.then(function (result) {
 
 
     // Calculate distance between current user to the rest of the users
-
     var current_user = users_array[0];
     let count = 0;
     users_array.shift();
@@ -44,27 +41,22 @@ p.then(function (result) {
                 });
                 console.log("User Array:");
                 console.log(users_array);
+                var tbody = document.getElementById('tbody');
+
+                for (var i = 0; i < users_array.length; i++) {
+                    var tr = "<tr>";
+                    /* Must not forget the $ sign */
+                    tr += "<td>" + users_array[i].user_name + "</td>" + "<td>" + users_array[i].distance + "</td>" + "<td>" + users_array[i].phoneNum + "</td>" + "<td>" + users_array[i].gender + "</td>" + "<td>" + users_array[i].days_to_pool + "</td></tr>";
+                    /* We add the table row to the table body */
+                    tbody.innerHTML += tr;
+                }
             }
 
         });
-
     });
-
-    // TODO: Fix bug for sorting
-    // BUG: Supposedly sort the users_array by distance
-    // Not working
-
-
-
 }).catch(function () {
     console.log("no user fetched, check connection or database");
 });
-
-function sort_user_by_distance(users_array){
-    return users_array.sort(function(a, b){
-        return a['address'] - b['address'];
-    });
-}
 
 
 // The method that returns all users in an array of objects
