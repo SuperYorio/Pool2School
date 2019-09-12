@@ -19,6 +19,7 @@ var firebaseRef = firebase.database().ref("Student");
 firebase.auth().signOut();
 
 
+
 document.getElementById("contactForm").addEventListener("submit", submitForm);
 
 
@@ -39,7 +40,7 @@ function submitForm(e) {
     saveInformation(firstName, lastName, email, password, phoneNum, gender, firstAddress, secondAddress,
         city, state, zip, days);
     const promise = firebase.auth().createUserWithEmailAndPassword(email, password);
-    promise.catch(e => console.log(e.message));
+    promise.catch(e => window.alert(e.message));
 }
 
 function getInputVal(id) {
@@ -119,6 +120,7 @@ function get_days_to_pool() {
     }
     return days.substring(1);
 }
+
 
 
 var password = document.getElementById("password")
