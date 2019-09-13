@@ -25,7 +25,6 @@ var currentEmail;
 // This method returns the information of a user
 ref.on("value", function (snapshot) {
     currentEmail = firebase.auth().currentUser.email;
-    console.log("Email:  " + currentEmail);
     snapshot.forEach(function (childSnapshot) {
         childData = childSnapshot.val();
         email = childData.Email;
@@ -65,13 +64,11 @@ function submitForm(e) {
     var state = getInputVal('editInputState');
     var zip = getInputVal('editInputZip');
     var days = get_days_to_pool();
-
     data = {City: city, Email: currentEmail, FirstAddress: firstAddress, FirstName: firstName, Gender: gender,
         LastName: lastName, Password: password, PhoneNumber: phoneNum, SecondAddress: secondAddress,
         State: state, Zip: zip, DaysToPool: days};
 
     const fb = firebase.database().ref();
-    console.log(userKey);
     fb.child("Student/" + userKey).update(data).then(function(){
         window.alert("Profile Updated!");
         window.location.href = "SearchPage.html";
