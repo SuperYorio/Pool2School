@@ -43,9 +43,6 @@ p.then(function (result) {
                     if(users_array[i].email == "admin@pool2school.com") {
                         return;
                     }
-                    if(users_array[i].distance > 10) {
-                        break;
-                    }
                     var tr = "<tr>";
                     tr += "<td>" + users_array[i].user_name + "</td>" + "<td>" + users_array[i].distance + "</td>" + "<td>" + users_array[i].phoneNum + "</td>" + "<td>" + users_array[i].gender + "</td>" + "<td>" + users_array[i].city + "</td>" +"<td>" + users_array[i].days_to_pool + "</td></tr>";
                     /* We add the table row to the table body */
