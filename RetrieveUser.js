@@ -128,6 +128,7 @@ function retrieve_all_info() {
         });
     });
 }
+var delayFactor = 0;
 
 function dist_count(directionsService, request, resolve, reject){
     directionsService.route(request,
@@ -151,7 +152,7 @@ function dist_count(directionsService, request, resolve, reject){
             }
         });
 }
-var delayFactor = 0;
+
 function dist(orig, dest) {
     return new Promise(function (resolve, reject) {
         var directionsService = new google.maps.DirectionsService();
