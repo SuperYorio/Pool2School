@@ -17,8 +17,6 @@ var users_array = [];
 let p = retrieve_all_info();
 p.then(function (result) {
     users_array = result;
-    // console.log("Calling All Users: ");
-    console.log(users_array);
     /**
      * TODO: THE rest of the code has to go here.
      */
@@ -39,14 +37,15 @@ p.then(function (result) {
                 users_array = users_array.sort(function(a, b) {
                     return a.distance - b.distance;
                 });
-                console.log("User Array:");
-                console.log(users_array);
                 var tbody = document.getElementById('tbody');
 
                 for (var i = 0; i < users_array.length; i++) {
+                    if(users_array[i].email == "admin@pool2school.com") {
+                        return;
+                    }
                     var tr = "<tr>";
                     /* Must not forget the $ sign */
-                    tr += "<td>" + users_array[i].user_name + "</td>" + "<td>" + users_array[i].distance + "</td>" + "<td>" + users_array[i].phoneNum + "</td>" + "<td>" + users_array[i].gender + "</td>" + "<td>" + users_array[i].days_to_pool + "</td></tr>";
+                    tr += "<td>" + users_array[i].user_name + "</td>" + "<td>" + users_array[i].distance + "</td>" + "<td>" + users_array[i].phoneNum + "</td>" + "<td>" + users_array[i].gender + "</td>" + "<td>" + users_array[i].city + "</td>" +"<td>" + users_array[i].days_to_pool + "</td></tr>";
                     /* We add the table row to the table body */
                     tbody.innerHTML += tr;
                 }
@@ -55,7 +54,7 @@ p.then(function (result) {
         });
     });
 }).catch(function () {
-    console.log("no user fetched, check connection or database");
+    window.alert("No user fetched, check connection or database. Contact pool2school@gmail.com!");
 });
 
 
@@ -72,7 +71,6 @@ function retrieve_all_info() {
         // This method returns the information of a user
         ref.on("value", function (snapshot) {
             var currentEmail = firebase.auth().currentUser.email;
-            console.log("Email:  " + currentEmail);
             // Snapshot used to retrieve information
             snapshot.forEach(function (childSnapshot) {
                 childData = childSnapshot.val();
@@ -97,7 +95,8 @@ function retrieve_all_info() {
                         address: user_address,
                         gender: childData.Gender,
                         phoneNum: childData.PhoneNumber,
-                        days_to_pool: childData.DaysToPool
+                        days_to_pool: childData.DaysToPool,
+                        city: childData.City
                     };
                     // This pushes the user we are searching with to the head of the array (hence orig)
                     all_users.unshift(orig_dict);
@@ -114,7 +113,8 @@ function retrieve_all_info() {
                     address: user_address,
                     gender: childData.Gender,
                     phoneNum: childData.PhoneNumber,
-                    days_to_pool: childData.DaysToPool
+                    days_to_pool: childData.DaysToPool,
+                    city: childData.City
                 };
                 // This adds all other users into the array (end)
                 all_users.push(user_dict);
@@ -138,11 +138,15 @@ function dist(orig, dest) {
             destination: dest,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
+        var delayFactor = 0;
         directionsService.route(request,
             function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     resolve(response.routes[0].legs[0].distance.value); // returns "undefined"
-                } else {
+                }
+                else {
+                    console.log("Error");
+                    console.log(status);
                     reject(status);
                 }
             });
