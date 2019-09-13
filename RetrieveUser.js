@@ -33,18 +33,20 @@ p.then(function (result) {
             distance = distance.toFixed(1);
             user.distance = parseFloat(distance);
             count ++;
-            if (count === users_array.length){
-                users_array = users_array.sort(function(a, b) {
-                    return a.distance - b.distance;
-                });
-                var tbody = document.getElementById('tbody');
-
+            users_array = users_array.sort(function(a, b) {
+                return a.distance - b.distance;
+            });
+            var tbody = document.getElementById('tbody');
+            // if (count === users_array.length)
+            if ( count === users_array.length) {
                 for (var i = 0; i < users_array.length; i++) {
                     if(users_array[i].email == "admin@pool2school.com") {
                         return;
                     }
+                    if(users_array[i].distance > 10) {
+                        break;
+                    }
                     var tr = "<tr>";
-                    /* Must not forget the $ sign */
                     tr += "<td>" + users_array[i].user_name + "</td>" + "<td>" + users_array[i].distance + "</td>" + "<td>" + users_array[i].phoneNum + "</td>" + "<td>" + users_array[i].gender + "</td>" + "<td>" + users_array[i].city + "</td>" +"<td>" + users_array[i].days_to_pool + "</td></tr>";
                     /* We add the table row to the table body */
                     tbody.innerHTML += tr;
@@ -130,6 +132,29 @@ function retrieve_all_info() {
     });
 }
 
+function dist_count(directionsService, request, resolve, reject){
+    directionsService.route(request,
+        function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                resolve(response.routes[0].legs[0].distance.value); // returns "undefined"
+            }
+
+            // New code for over query limit
+            else if (status === google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+                delayFactor++;
+                console.log("Running calculations... " + delayFactor);
+                setTimeout(function () {
+                    dist_count(directionsService, request, resolve, reject);
+                }, delayFactor * 200);
+            }
+            else {
+                console.log("Error");
+                console.log(status);
+                reject(status);
+            }
+        });
+}
+var delayFactor = 0;
 function dist(orig, dest) {
     return new Promise(function (resolve, reject) {
         var directionsService = new google.maps.DirectionsService();
@@ -138,17 +163,6 @@ function dist(orig, dest) {
             destination: dest,
             travelMode: google.maps.DirectionsTravelMode.DRIVING
         };
-        var delayFactor = 0;
-        directionsService.route(request,
-            function (response, status) {
-                if (status == google.maps.DirectionsStatus.OK) {
-                    resolve(response.routes[0].legs[0].distance.value); // returns "undefined"
-                }
-                else {
-                    console.log("Error");
-                    console.log(status);
-                    reject(status);
-                }
-            });
+        dist_count(directionsService, request, resolve, reject);
     });
 }
