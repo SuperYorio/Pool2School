@@ -140,11 +140,9 @@ confirm_password.onkeyup = validatePassword;
 // Add a real time listener
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-        console.log("Logged In!");
-        console.log(user);
         window.location.href = "SearchPage.html";
     } else {
-        console.log('Not Logged In!');
+        // console.log('Not Logged In!');
         // window.alert("Email or Password incorrect !");
     }
 });
