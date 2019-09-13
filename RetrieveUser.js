@@ -143,8 +143,12 @@ function dist(orig, dest) {
             function (response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {
                     resolve(response.routes[0].legs[0].distance.value); // returns "undefined"
-                }
-                else {
+                }else if (status === google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+                    delayFactor++;
+                    setTimeout(function () {
+                        m_get_directions_route(request);
+                    }, delayFactor * 1000);
+                }else {
                     console.log("Error");
                     console.log(status);
                     reject(status);
