@@ -26,22 +26,25 @@ p.then(function (result) {
     var current_user = users_array[0];
     let count = 0;
     users_array.shift();
+    // console.log(users_array.length);
     users_array.forEach((user) => {
+    	// console.log(user.email);
         var p = dist(current_user.address, user.address);
         p.then(function(result) {
             var distance = result / 1609.344;
+            console.log(count + " Out of " + users_array.length + " Users Counted");
             distance = distance.toFixed(1);
             user.distance = parseFloat(distance);
             count ++;
-            users_array = users_array.sort(function(a, b) {
-                return a.distance - b.distance;
-            });
             var tbody = document.getElementById('tbody');
-            // if (count === users_array.length)
-            if ( count === users_array.length) {
+
+            if (count === users_array.length) {
+            	users_array = users_array.sort(function(a, b) {
+                return a.distance - b.distance;
+            	});
                 for (var i = 0; i < users_array.length; i++) {
                     if(users_array[i].email == "admin@pool2school.com") {
-                        return;
+                        continue;
                     }
                     var tr = "<tr>";
                     tr += "<td>" + users_array[i].user_name + "</td>" + "<td>" + users_array[i].distance + "</td>" + "<td>" + users_array[i].phoneNum + "</td>" + "<td>" + users_array[i].gender + "</td>" + "<td>" + users_array[i].city + "</td>" +"<td>" + users_array[i].days_to_pool + "</td></tr>";
@@ -95,7 +98,8 @@ function retrieve_all_info() {
                         gender: childData.Gender,
                         phoneNum: childData.PhoneNumber,
                         days_to_pool: childData.DaysToPool,
-                        city: childData.City
+                        city: childData.City,
+                        zip: childData.Zip
                     };
                     // This pushes the user we are searching with to the head of the array (hence orig)
                     all_users.unshift(orig_dict);
@@ -113,7 +117,8 @@ function retrieve_all_info() {
                     gender: childData.Gender,
                     phoneNum: childData.PhoneNumber,
                     days_to_pool: childData.DaysToPool,
-                    city: childData.City
+                    city: childData.City,
+                    zip: childData.Zip
                 };
                 // This adds all other users into the array (end)
                 all_users.push(user_dict);
@@ -143,7 +148,7 @@ function dist_count(directionsService, request, resolve, reject){
                 console.log("Running calculations... " + delayFactor);
                 setTimeout(function () {
                     dist_count(directionsService, request, resolve, reject);
-                }, delayFactor * 200);
+                }, delayFactor * 1000);
             }
             else {
                 console.log("Error");
